@@ -2,5 +2,8 @@ name = "kfz-trigger"
 main = "worker.js"
 compatibility_date = "2026-10-16"
 
+[observability]
+enabled = true
+
 [triggers]
 crons = ["*/15 * * * *"]
