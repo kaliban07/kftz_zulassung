@@ -1,12 +1,8 @@
 name: KFZ Termin Checker Köln
 
 on:
-  schedule:
-    # Läuft alle 15 Minuten (deutlich stabiler bei GitHub Cron)
-    - cron: '*/15 * * * *'
-  push:
-    branches:
-      - main
+  repository_dispatch:
+    types: [trigger-check]
   workflow_dispatch:
 
 jobs:
