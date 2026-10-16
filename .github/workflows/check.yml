@@ -5,22 +5,26 @@ on:
     types: [trigger-check]
   workflow_dispatch:
 
+# verhindert, dass sich Läufe stapeln
+concurrency:
+  group: kfz-check
+  cancel-in-progress: false
+
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - name: Code auschecken
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Python einrichten
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: Abhängigkeiten installieren
         run: |
           pip install playwright
-          playwright install chromium
+          playwright install --with-deps chromium
 
       - name: Checker ausführen
         env:
@@ -31,3 +35,11 @@ jobs:
           EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
         run: python checker.py
 
+      # Screenshots + HTML jedes Schritts – zum Nachsehen, was der Bot wirklich sieht
+      - name: Debug-Dateien hochladen
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: debug-${{ github.run_number }}
+          path: debug/
+          retention-days: 3
