@@ -2,9 +2,12 @@ name: KFZ Termin Checker Köln
 
 on:
   schedule:
-    # Läuft alle 10 Minuten
-    - cron: '6,16,26,36,46,56 * * * *'
-  workflow_dispatch: # Erlaubt manuelles Starten über die GitHub-Oberfläche zum Testen
+    # Läuft alle 15 Minuten (deutlich stabiler bei GitHub Cron)
+    - cron: '*/15 * * * *'
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   check:
@@ -31,4 +34,3 @@ jobs:
           EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
           EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
         run: python checker.py
-
