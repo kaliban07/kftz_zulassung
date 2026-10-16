@@ -1,6 +1,8 @@
-name = "kfz-trigger"
+# name = Worker-Name in Cloudflare. Deine URL lautet kftz-zulassung.<...>.workers.dev,
+# also muss hier derselbe Name stehen, sonst deployst du einen ZWEITEN Worker.
+name = "kftz-zulassung"
 main = "worker.js"
-compatibility_date = "2026-10-16"
+compatibility_date = "2026-10-01"
 
 [observability]
 enabled = true
