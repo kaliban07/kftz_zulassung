@@ -15,7 +15,7 @@ INFO_URL = "https://www.stadt-koeln.de/artikel/06415/index.html"
 FALLBACK_URL = ("https://termine.stadt-koeln.de/m/kfz-zulassung/extern/calendar/"
                 "?uid=67523a04-37af-4131-9495-0a3566e0eb8b")
 SERVICE_TEXT = os.environ.get("SERVICE_TEXT", "Anmeldung eines Gebrauchtfahrzeuges (Umschreibung")
-LIMIT = datetime.strptime(os.environ.get("DATE_LIMIT", "2026-10-23"), "%Y-%m-%d")
+LIMIT = datetime.strptime(os.environ.get("DATE_LIMIT", "2026-10-30"), "%Y-%m-%d")
 NO_SLOTS_PATTERNS = [r"keine\s+(freien\s+)?termine", r"keine\s+termine\s+verf",
                      r"ausgebucht", r"keine\s+verf.gbaren\s+termine"]
 
