@@ -196,8 +196,13 @@ def run():
             browser.close()
             return
 
+        # Nur den Abschnitt "Tage mit verfügbaren Terminen" auswerten
+        m = re.search(r"Tage mit verf.gbaren Terminen(.*?)(Ihre bisherigen Angaben|$)", text, re.S)
+        section = m.group(1) if m else text
         today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-        hits = [d for d in dates_in_text(text) if today <= d <= LIMIT]
+        free = [d for d in dates_in_text(section) if d >= today]
+        print("Freie Tage laut Kalender: " + (", ".join(d.strftime("%d.%m.%Y") for d in free) or "keine"))
+        hits = [d for d in free if d <= LIMIT]
         if hits:
             days = ", ".join(d.strftime("%d.%m.%Y") for d in hits)
             print(f"Ergebnis: mögliche Termine bis {LIMIT:%d.%m.%Y}: {days}")
@@ -205,7 +210,7 @@ def run():
                        f"Möglicherweise freie Tage bis {LIMIT:%d.%m.%Y}: {days}\n\n"
                        f"Jetzt buchen: {booking_url}\n")
         else:
-            print("Ergebnis: keine passenden Tage im Seitentext erkannt.")
+            print(f"Ergebnis: kein freier Tag bis {LIMIT:%d.%m.%Y}.")
         browser.close()
 
 
