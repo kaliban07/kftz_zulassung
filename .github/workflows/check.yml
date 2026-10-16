@@ -1,0 +1,33 @@
+name: KFZ Termin Checker Köln
+
+on:
+  schedule:
+    # Läuft alle 10 Minuten
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Erlaubt manuelles Starten über die GitHub-Oberfläche zum Testen
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v3
+
+      - name: Python einrichten
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Abhängigkeiten installieren
+        run: |
+          pip install playwright
+          playwright install chromium
+
+      - name: Checker ausführen
+        env:
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_PASS: ${{ secrets.EMAIL_PASS }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
+        run: python checker.py
