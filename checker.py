@@ -103,3 +103,8 @@ def run():
 
 if __name__ == "__main__":
     run()
+
+# Test-Aufruf, um den E-Mail-Versand zu prüfen
+if __name__ == "__main__":
+    # run()  <- Kommentiere den echten Lauf kurz aus (setze eine Raute davor, falls du nicht willst, dass er jetzt sofort die Seite prüft)
+    send_email_notification(["2026-10-20 (Test)"], "https://termine.stadt-koeln.de")
